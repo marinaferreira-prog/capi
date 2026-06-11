@@ -1,0 +1,15 @@
+{
+  "name": "capi-meta",
+  "version": "1.0.0",
+  "description": "App para enviar eventos de conversión CAPI de Meta desde formularios instantáneos",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "node-fetch": "^2.7.0",
+    "dotenv": "^16.4.5",
+  }
+}
