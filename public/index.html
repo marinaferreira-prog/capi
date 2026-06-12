@@ -231,6 +231,11 @@
     </div>
 
     <div class="field">
+      <label>Lead ID <span class="req">*</span> <span class="hint">— ID del lead del formulario instantáneo</span></label>
+      <input type="text" id="leadId" placeholder="1234567890123456789" />
+    </div>
+
+    <div class="field">
       <label>Lead event source <span class="hint">— nombre de tu CRM o fuente</span></label>
       <input type="text" id="leadEventSource" placeholder="Your CRM" />
     </div>
@@ -273,7 +278,8 @@
       const eventDate = document.getElementById('eventDate').value;
       const eventName = document.querySelector('input[name="eventName"]:checked')?.value;
 
-      if (!pixelId || !accessToken || !eventDate || !eventName) {
+      const leadId = document.getElementById('leadId').value.trim();
+      if (!pixelId || !accessToken || !eventDate || !eventName || !leadId) {
         showResult('error', 'Completá todos los campos obligatorios (*).');
         return;
       }
@@ -283,6 +289,7 @@
         accessToken,
         eventName,
         eventDate,
+        leadId: document.getElementById('leadId').value.trim(),
         leadEventSource: document.getElementById('leadEventSource').value.trim() || undefined,
         originalEventName: document.getElementById('originalEventName').value || undefined,
         testEventCode: document.getElementById('testEventCode').value.trim() || undefined,

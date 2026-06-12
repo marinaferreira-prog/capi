@@ -10,9 +10,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 const META_API_VERSION = 'v19.0';
 
 app.post('/api/send-event', async (req, res) => {
-  const { pixelId, accessToken, eventName, eventDate, leadEventSource, originalEventName, testEventCode } = req.body;
+  const { pixelId, accessToken, eventName, eventDate, leadId, leadEventSource, originalEventName, testEventCode } = req.body;
 
-  if (!pixelId || !accessToken || !eventName || !eventDate) {
+  if (!pixelId || !accessToken || !eventName || !eventDate || !leadId) {
     return res.status(400).json({ error: 'Faltan campos obligatorios.' });
   }
 
@@ -22,6 +22,9 @@ app.post('/api/send-event', async (req, res) => {
     event_name: eventName,
     event_time: eventTime,
     action_source: 'system_generated',
+    user_data: {
+      lead_id: leadId,
+    },
     custom_data: {
       lead_event_source: leadEventSource || 'Your CRM',
       event_source: 'crm',
