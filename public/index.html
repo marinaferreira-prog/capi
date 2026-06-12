@@ -340,6 +340,39 @@
     </div>
 
     <hr class="divider" />
+    <p class="section-title">Atribución y fuente</p>
+
+    <div class="row-2">
+      <div class="field">
+        <label>Lead event source
+          <span class="hint">— nombre de tu CRM</span>
+        </label>
+        <input type="text" id="leadEventSource" placeholder="Your CRM" />
+      </div>
+      <div class="field">
+        <label>Attribution share
+          <span class="hint">— 0.0 a 1.0</span>
+        </label>
+        <input type="text" id="attributionShare" placeholder="0.3" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Evento original
+        <span class="hint">— original_event_data (opcional, si difiere del evento)</span>
+      </label>
+      <select id="originalEventName">
+        <option value="">Mismo que el evento seleccionado</option>
+        <option value="Lead">Lead</option>
+        <option value="CompleteRegistration">CompleteRegistration</option>
+        <option value="Contact">Contact</option>
+        <option value="Subscribe">Subscribe</option>
+        <option value="Purchase">Purchase</option>
+        <option value="Schedule">Schedule</option>
+      </select>
+    </div>
+
+    <hr class="divider" />
 
     <button class="toggle-optional" onclick="toggleOptional()">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
@@ -368,6 +401,11 @@
           <label>Apellido</label>
           <input type="text" id="lastName" placeholder="Pérez" />
         </div>
+      </div>
+
+      <div class="field">
+        <label>FBC <span class="hint">— click ID de Facebook (fbc)</span></label>
+        <input type="text" id="fbc" placeholder="fb.1.1234567890.AbCdEfGhIjKl" />
       </div>
 
       <div class="field">
@@ -420,10 +458,14 @@
         eventName,
         formId,
         eventDate,
+        leadEventSource: document.getElementById('leadEventSource').value.trim() || undefined,
+        attributionShare: document.getElementById('attributionShare').value.trim() || undefined,
+        originalEventName: document.getElementById('originalEventName').value || undefined,
         email: document.getElementById('email').value.trim() || undefined,
         phone: document.getElementById('phone').value.trim() || undefined,
         firstName: document.getElementById('firstName').value.trim() || undefined,
         lastName: document.getElementById('lastName').value.trim() || undefined,
+        fbc: document.getElementById('fbc').value.trim() || undefined,
         testEventCode: document.getElementById('testEventCode').value.trim() || undefined,
       };
 
@@ -444,7 +486,7 @@
         if (response.ok && data.success) {
           showResult('success',
             '¡Evento enviado correctamente!',
-            data.result
+            { respuesta: data.result, payload_enviado: data.payload }
           );
         } else {
           showResult('error',
